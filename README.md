@@ -1,1 +1,1 @@
-Just Having Fun!
+Just for fun!
