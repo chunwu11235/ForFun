@@ -7,10 +7,10 @@ print("Hello!")
 print("tensorflow:", tf.__version__)
 print("numpy:", np.__version__)
 
-a = 10
+newvariable698 = a
+newvariable698 = 10
 b = 10
-print(lib.myAdd(a, b))
+print(lib.myAdd(newvariable698, b))
 
 if __name__ == "__main__":
     print("---hello.py--")
-
