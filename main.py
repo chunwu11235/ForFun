@@ -2,8 +2,6 @@ import numpy as np
 import tensorflow as tf
 from ForFun.lib_playground import myAdd
 
-
-
 def main():
     print("tensorflow:", tf.__version__)
     print("numpy:", np.__version__)
