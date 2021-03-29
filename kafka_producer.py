@@ -7,5 +7,4 @@ try:
 except Exception as e:
     print(e)
 
-
 producer.flush(20)

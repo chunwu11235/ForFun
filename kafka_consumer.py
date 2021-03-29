@@ -1,4 +1,5 @@
 from kafka import KafkaConsumer
 consumer = KafkaConsumer('sample')
-for message in consumer:
-    print (message)
+while(True):
+    for message in consumer:
+        print (message)
