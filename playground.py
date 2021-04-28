@@ -34,3 +34,17 @@ first, second, *others = n
 print(first, second, others)
 # *all = n # error
 
+
+names = ["Lisa", "Jane", "Annie", "Elizabeth"]
+print(sorted(names, key=lambda name: (len(name), name.lower()), reverse=True))
+
+print("\n")
+
+def func(a, b=[]): # bad, the default argument only evaluate once when the function is defined
+    return b
+
+assert func(10) is func(20)
+b_ref = func(1)
+b_ref2 = func(1)
+b_ref.append(1000)
+print(b_ref2) # [1000]
