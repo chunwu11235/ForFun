@@ -48,3 +48,41 @@ b_ref = func(1)
 b_ref2 = func(1)
 b_ref.append(1000)
 print(b_ref2) # [1000]
+
+
+# function decorator
+import time
+from functools import wraps
+
+def timer(fn):
+    @wraps(fn)
+    def wrapper(*args, **kargs):
+        print(f'calling {fn.__name__}({args!r}, {kargs!r}')
+        start = time.time()
+        res = fn(*args, **kargs)
+        print(f'function call end')
+        print(f'spent {start-time.time():.6f}\n')
+        return res
+    return wrapper
+
+
+@timer
+def factorial(n: int) -> int:
+    """
+    this is to test docstring
+    """
+    if n < 0:
+        raise ValueError(f'input cannot be negative')
+    res = 1
+    for i in range(1, n+1):
+        res *= i
+    return res
+
+print(factorial(4))
+# print(factorial(-1))
+
+print(factorial)
+print(help(factorial))
+# help(factorial)
+    
+
