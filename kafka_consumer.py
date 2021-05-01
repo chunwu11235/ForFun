@@ -1,3 +1,4 @@
+# todo: migrate to confluent-kafka
 from kafka import KafkaConsumer
 consumer = KafkaConsumer('sample')
 while(True):

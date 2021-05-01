@@ -82,7 +82,6 @@ print(factorial(4))
 # print(factorial(-1))
 
 print(factorial)
-print(help(factorial))
+# print(help(factorial))
 # help(factorial)
-    
 
