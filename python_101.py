@@ -84,8 +84,3 @@ print(factorial(4))
 print(factorial)
 # print(help(factorial))
 # help(factorial)
-
-global_args = None
-def func(*args):
-    global global_args
-    global_args = args

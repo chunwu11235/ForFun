@@ -10,6 +10,6 @@ def timer(func):
         res = func(*args, **kargs)
         elapse = (datetime.datetime.now() - start)
         print(f'---- Took {elapse} ---')
-        return res
+        return res, elapse.total_seconds()
     return wrapper
 
