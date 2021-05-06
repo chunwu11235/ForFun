@@ -12,6 +12,13 @@ def run_sleepers(n):
 
 n = 3
 _, elapse = run_sleepers(n)
-assert math.isclose(n, elapse, abs_tol=0.1)
 
 
+# popen is non-blocking
+@timer
+def popen_sleepers(n):
+    sleepers = []
+    for _ in range(n):
+        sleepers.append(subprocess.Popen(('sleep', '1')))
+
+_, elapse2 = popen_sleepers(n)
