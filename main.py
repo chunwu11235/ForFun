@@ -1,9 +1,11 @@
-from ForFun.lib_playground import myAdd
+import subprocess
 
-def main():
-    print("myAdd, 10 + 2 = ", myAdd(10, 2))
+from lib.utils.utils import timer
 
-if __name__ == "__main__":
-    print("---main.py---")
-    main()
 
+@timer
+def sleep():
+    subprocess.run(('sleep', '1'))
+
+
+sleep()
