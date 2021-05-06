@@ -6,3 +6,5 @@ from my_lib.utils.utils import timer
 def sleep():
     subprocess.run(('sleep', '1'))
 
+
+sleep()
