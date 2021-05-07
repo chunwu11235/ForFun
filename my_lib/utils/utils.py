@@ -2,6 +2,12 @@ import functools
 import datetime
 import time
 
+def sleep(n):
+    time.sleep(n)
+
+def hello():
+    print(f'Hello!')
+
 def timer(func):
     @functools.wraps(func)
     def wrapper(*args, **kargs):
@@ -13,6 +19,15 @@ def timer(func):
         return elapse.total_seconds(), res
     return wrapper
 
+def counter(func):
+    count = 0
+    @functools.wraps(func)
+    def wrapper(*args, **kargs):
+        nonlocal count
+        count += 1
+        return count, func(*args, **kargs)
+    return wrapper
+
 # decorator with args
 # decorator_factory
 def delay(second: float):
@@ -20,13 +35,10 @@ def delay(second: float):
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kargs):
-            print(f'--- delay {second} second ---')
+            print(f'--- calling {func.__name__} with delay {second} second ---')
             time.sleep(second)
-            print(f'--- calling {func.__name__} ---')
+            
             return second, func(*args, **kargs)
         return wrapper
     return decorator
         
-        
-def sleep(n):
-    time.sleep(n)

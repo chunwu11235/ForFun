@@ -29,3 +29,8 @@ def test_delay(t):
     assert math.isclose(second, t, abs_tol=0.01)
 
     
+def test_counter():
+    f = counter(hello)
+    for i in range(1, 10):
+        c, _ = f()
+        assert c == i 
