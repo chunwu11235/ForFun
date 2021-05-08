@@ -1,5 +1,6 @@
 from threading import Thread, Lock
 from my_lib.utils.utils import *
+import time
 
 import queue
 
@@ -41,23 +42,16 @@ def demo_race_condition(n_thread=10, n_counts=1000000):
 
 class MyQueue(queue.Queue):
     END = object()
-    
     def end(self):
-        self.add(MyQueue.END)
-    
-    def __iter__(self):
-        while self.qsize():
-            item = self.get()
-            if item is MyQueue.END:
-                raise StopIteration
-            else:
-                yield item
+        self.put(MyQueue.END)
 
 class Job:
     id = 0
+    lock = Lock()
     def __init__(self):
-        self._id = Job.id
-        Job.id += 1
+        with Job.lock:
+            self._id = Job.id
+            Job.id += 1
         self.done = False
     
     def work(self):
@@ -67,8 +61,7 @@ class Job:
         return self.done == True
 
     def __repr__(self):
-        return f'Job {self.id} done? {self.done}'
-
+        return f'Job {self._id} done? {self.done}'
 
 class Producer(Thread):
     def __init__(self, q: queue, n_jobs, **kargs):
@@ -77,25 +70,68 @@ class Producer(Thread):
         self.n_jobs = n_jobs
     
     def run(self):
-        for _ in range(self.n_jobs):
+        for i in range(self.n_jobs):
+            if i % 3 == 0:
+                time.sleep(1)
             j = Job()
             # print(f'{self} is producing job {j}')
             self.q.put(j)
-            print(f'{self} pushed job {j}')
-            print(f'size of {self.q} is {self.q.qsize()}')
+            print(f'{self} pushed {j}')
 
-
+class Consumer(Thread):
+    def __init__(self, q, ls,**kargs):
+        super().__init__(**kargs)
+        self.q = q
+        self.ls = ls
+    
+    def run(self):
+        i = 0
+        while True:
+            i += 1
+            if i % 5 == 0:
+                time.sleep(1)
+            job = self.q.get()
+            if job == MyQueue.END:
+                self.q.task_done()
+                break
+            else:
+                job.work()
+                print(f'{self} finished {job}')
+                self.ls.append(job)
+                self.q.task_done()
+        return
+                
+ 
 def demo_threading_with_queue():
     """the consumer producer pattern"""
 
     q = MyQueue(10)
-    producers = [Producer(q, 100) for _ in range(5)]
+    ls = []
+    producers = [Producer(q, 50) for _ in range(3)]
     for p in producers:
         p.start()
-
+    
+    consumers = [Consumer(q, ls) for _ in range(3)]
+    for c in consumers:
+        c.start()
 
     for p in producers:
         p.join()
+    
+    # for _ in consumers:
+    #     q.end()
+    q.join()
+
+    assert len(ls) == 150
+    # ls.sort(key=lambda j: j.id)
+    seen = set()
+    for j in ls:
+        assert j._id not in seen
+        seen.add(j._id)
+        assert j.is_done
+        print(f'{j}')
+    
+    print(f'---- END ----')
 
 
 def main():
