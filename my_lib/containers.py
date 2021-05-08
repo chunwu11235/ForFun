@@ -15,7 +15,7 @@ class Stack:
             try:
                 yield self.items.pop()
             except IndexError:
-                return
+                raise StopIteration
             
 def playground():
     s = Stack()
@@ -24,3 +24,5 @@ def playground():
 
     for i in iter(s):
         print(i)
+
+playground()
