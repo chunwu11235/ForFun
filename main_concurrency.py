@@ -1,5 +1,6 @@
 from threading import Thread, Lock
 from my_lib.utils.utils import *
+from concurrent.futures import ThreadPoolExecutor
 import time
 
 import queue
@@ -134,12 +135,20 @@ def demo_threading_with_queue():
     print(f'---- END ----')
 
 
+@timer
+def demo_threadpool():
+    with ThreadPoolExecutor(max_workers=10) as pool:
+        futures = [pool.submit(sleep, 1) for _ in range(5)]
+        for f in futures:
+            f.result()
+
 def main():
     # demo_thread101()
     # print('----')
     # demo_race_condition()
     print('----')
-    demo_threading_with_queue()
+    # demo_threading_with_queue()
+    demo_threadpool()
 
 
 if __name__ == '__main__':
