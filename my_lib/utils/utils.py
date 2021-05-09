@@ -81,23 +81,4 @@ def file_context_manager(filename, mode):
     finally:
         resource.close()
 
-# try:
-#     with open('requirements.txt', 'rb') as f:
-#         print(f'--- with ---')
-#         print(f.readline())
-#         raise MyException
-# except MyException:
-#     pass
-
-# assert f.closed
-
-# try:
-#     with FileContextManager('rxt', 'rb') as f2:
-#         print(f'--- old style manager ---')
-#         print(f2.readline())
-#         # raise MyException
-# except MyException:
-#     pass
-
-# assert f2.closed # make sure the resource is released
 

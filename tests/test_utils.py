@@ -45,7 +45,7 @@ def test_repeat():
     assert mock.call_count == 5
     
 
-def test_file_context_manager():
+def test_file_context_manager_decorator():
     try:
         with file_context_manager('requirements.txt', 'rb') as f:
             print(f'--- contextmanager decorator ---')
@@ -54,3 +54,15 @@ def test_file_context_manager():
     except MyException:
         pass
     assert f.closed
+
+
+def test_file_context_manager_class():
+    try:
+        with FileContextManager('requirements.txt', 'rb') as f:
+            print(f'--- old style manager ---')
+            print(f.readline())
+            raise MyException
+    except MyException:
+        pass
+
+    assert f.closed # make sure the resource is released
