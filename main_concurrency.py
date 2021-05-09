@@ -143,15 +143,16 @@ def demo_threadpool():
             f.result()
 
 
+@repeat(5)
 @delay(second=1)
 def hello():
-    print('Hello!')
+    print('Hello from thread!')
 
-def demo_deamon():
-
-    t = Thread(target=hello, daemon=False)
-
-    
+def demo_daemon():
+    t = Thread(target=hello, daemon=True)
+    t.start()
+    time.sleep(3)
+    print(f'--- main thread end ---') # main thread exits and kills subthreads iff they are daemonic
 
 
 def main():
@@ -160,7 +161,8 @@ def main():
     # demo_race_condition()
     print('----')
     # demo_threading_with_queue()
-    demo_threadpool()
+    # demo_threadpool()
+    demo_daemon()
 
 
 if __name__ == '__main__':
