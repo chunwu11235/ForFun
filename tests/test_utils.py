@@ -2,6 +2,7 @@ import pytest
 import time
 import math
 from my_lib.utils.utils import *
+from unittest.mock import Mock
 
 @pytest.mark.parametrize("t,", [
     1,
@@ -34,3 +35,12 @@ def test_counter():
     for i in range(1, 10):
         c, _ = f()
         assert c == i 
+    
+
+def test_repeat():
+    mock = Mock(side_effect=lambda : None)
+    f = repeat(5)(mock)
+    f()
+
+    assert mock.call_count == 5
+    

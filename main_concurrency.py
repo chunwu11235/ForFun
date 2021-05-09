@@ -142,6 +142,18 @@ def demo_threadpool():
         for f in futures:
             f.result()
 
+
+@delay(second=1)
+def hello():
+    print('Hello!')
+
+def demo_deamon():
+
+    t = Thread(target=hello, daemon=False)
+
+    
+
+
 def main():
     # demo_thread101()
     # print('----')

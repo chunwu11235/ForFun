@@ -42,3 +42,12 @@ def delay(second: float):
         return wrapper
     return decorator
         
+
+def repeat(n: int):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kargs):
+            res = [func(*args, **kargs) for _ in range(n)]
+            return res
+        return wrapper
+    return decorator    
