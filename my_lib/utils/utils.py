@@ -1,6 +1,7 @@
 import functools
 import datetime
 import time
+from contextlib import contextmanager
 
 def sleep(n):
     time.sleep(n)
@@ -51,3 +52,52 @@ def repeat(n: int):
             return res
         return wrapper
     return decorator    
+
+class MyException(Exception):
+    def __init__(self, *args, **kargs):
+        super().__init__(*args, **kargs)
+
+
+class FileContextManager:
+    """Old style context manager"""
+    def __init__(self, filename, mode):
+        self.filename = filename
+        self.mode = mode
+
+    def __enter__(self):
+        print(f'Prepareing resources')
+        self.file = open(self.filename, self.mode)
+        return self.file # return resources
+        
+    def __exit__(self, exc_type, exc_value, exc_traceback):
+        print(f'Realeasing resources')
+        self.file.close() # release resource
+
+@contextmanager
+def file_context_manager(filename, mode):
+    resource = open(filename, mode)
+    try:
+        yield resource # provide resource
+    finally:
+        resource.close()
+
+# try:
+#     with open('requirements.txt', 'rb') as f:
+#         print(f'--- with ---')
+#         print(f.readline())
+#         raise MyException
+# except MyException:
+#     pass
+
+# assert f.closed
+
+# try:
+#     with FileContextManager('rxt', 'rb') as f2:
+#         print(f'--- old style manager ---')
+#         print(f2.readline())
+#         # raise MyException
+# except MyException:
+#     pass
+
+# assert f2.closed # make sure the resource is released
+

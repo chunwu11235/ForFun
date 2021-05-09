@@ -44,3 +44,13 @@ def test_repeat():
 
     assert mock.call_count == 5
     
+
+def test_file_context_manager():
+    try:
+        with file_context_manager('requirements.txt', 'rb') as f:
+            print(f'--- contextmanager decorator ---')
+            # print(f1.readline())
+            raise MyException
+    except MyException:
+        pass
+    assert f.closed

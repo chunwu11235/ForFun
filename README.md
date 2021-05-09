@@ -4,8 +4,10 @@ Just for fun!
    1. Function Decorators
    2. Decorator Factory
    3. Generator, Iterators
+   4. Context Manager
 2. Parallelism
    1. subprocess
 3. Concurrency
    1. Thread 101
    2. Concurrent Consumer/Producer Pattern with Queue
+   3. Daemon
