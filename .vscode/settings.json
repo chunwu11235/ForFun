@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "/Users/ming-chunwu/miniforge3/envs/simple_python3.8/bin/python",
+    "python.pythonPath": "/Users/ming-chunwu/miniforge3/envs/tf/bin/python",
     "python.linting.flake8Enabled": false,
     "python.linting.enabled": true,
     "python.linting.pylintEnabled": true,

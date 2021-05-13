@@ -1,5 +1,5 @@
 import abc
-
+from collections.abc import Iterator
 
 def generator(n):
     for i in range(n):
@@ -67,11 +67,14 @@ def playground():
     my_iterable = MyIterable(10)
     print(*my_iterable)
     print(*my_iterable)
+    assert not isinstance(my_iterable, Iterator)
 
     it1 = iter(my_iterable)
     print(*it1)
+    assert isinstance(it1, Iterator) # duck typing
     
     it2 = iter(my_iterable)
+    assert isinstance(it1, Iterator)
     
     try:
         print(next(it1))
